@@ -38,8 +38,8 @@ const ListadoGastos = ({gastos, setModal,setGasto, filtro, gastosFiltrados}) => 
         )} */}
 
         {/* Doble comprobación */}
-        {gastos.length === 0 || (gastosFiltrados.length === 0 &&
-        !!filtro )  && (
+        {(gastos.length === 0 || (gastosFiltrados.length === 0 &&
+        !!filtro) )  && (
             <Text style={styles.noGastos}>No Hay Gastos</Text>
         )}
     </View>
