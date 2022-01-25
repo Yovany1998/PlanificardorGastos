@@ -16,27 +16,36 @@ import { formatearCantidad
  }
 
 
-const Gasto = ({gasto}) => {
+const Gasto = ({gasto, setModal,setGasto}) => {
 const {nombre, categoria , cantidad , fecha} = gasto
 
+    const handleAcciones =() =>{
+        setModal(true)
+        setGasto(gasto)
+    }
+
   return (
-      <View style={styles.contenedor}>
-          <View style={styles.contenido}>
-              <View style={styles.contenedorImagen}>
-              <Image
-              style={styles.imagen}
-                source={diccionarioIconos[categoria]}
-              />
-                 <View style={styles.contenedorTexto}>
-                     <Text style={styles.categoria}>{categoria}</Text>
-                    <Text style={styles.nombre}>{nombre}</Text>
-                    <Text style={styles.fecha}>{formatearFecha(fecha)}</Text>
-              </View>               
-              </View>
-              <Text style={styles.label}>{formatearCantidad(cantidad)}</Text>
-          </View>
-        
-      </View>
+      <Pressable
+      onLongPress={handleAcciones}
+      >
+        <View style={styles.contenedor}>
+            <View style={styles.contenido}>
+                <View style={styles.contenedorImagen}>
+                <Image
+                style={styles.imagen}
+                    source={diccionarioIconos[categoria]}
+                />
+                    <View style={styles.contenedorTexto}>
+                        <Text style={styles.categoria}>{categoria}</Text>
+                        <Text style={styles.nombre}>{nombre}</Text>
+                        <Text style={styles.fecha}>{formatearFecha(fecha)}</Text>
+                </View>               
+                </View>
+                <Text style={styles.label}>{formatearCantidad(cantidad)}</Text>
+            </View>
+            
+        </View>
+      </Pressable>
   )
 };
 

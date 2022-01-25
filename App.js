@@ -21,8 +21,9 @@ import ListadoGastos from './src/components/ListadoGastos';
 const App = () => {
   const[isValidPresupuesto,setIsValidPresupuesto]= useState(false)
   const [presupuesto, setPresupuesto] = useState(0)
-const [gastos,setGastos] = useState([])
-const [modal, setModal]= useState(false)
+  const [gastos,setGastos] = useState([])
+  const [modal, setModal]= useState(false)
+  const [gasto, setGasto] = useState({})
 
 
   const handleNuevoPresupuesto = (presupuesto) =>{
@@ -35,20 +36,49 @@ const [modal, setModal]= useState(false)
   }
 
   const handleGasto = gasto =>{
-   if(Object.values(gasto).includes('')){
+   if([gasto.nombre, gasto.categoria, gasto.cantidad].includes('') ){
     Alert.alert(
       "Error",
       "Todos los campos son obligatorios",
     )
     return
    }
+
+   if(gasto.id){
+    //Edición
+    const gastosActualizados = gastos.map(gastoState =>
+        gastoState.id === gasto.id? gasto : gastoState)
+
+        setGastos(gastosActualizados)
+
+   }else{
    //añadir el nuevo gasto
    gasto.id = generarId()
    gasto.fecha = Date.now()
-
    setGastos([...gastos, gasto])
+   }
+
    setModal(!modal)
   }
+
+
+const  eliminarGasto = id =>{
+  Alert.alert(
+    '¿Deseas eliminar este gasto',
+    'Un gasto eliminado no se puede recuperar',
+    [
+      {text: 'No', style: 'cancel'},
+      {text: 'Si,Eliminar', onPress: () =>{
+      const gastosActualizados = gastos.filter(gastoState =>
+        gastoState.id !== id)
+        setGastos(gastosActualizados)
+        setModal(!modal)
+        setGasto({})
+      }}
+
+    ]
+  )
+}
 
   return (
     <View style={styles.contenedor}>
@@ -79,6 +109,8 @@ const [modal, setModal]= useState(false)
       {isValidPresupuesto && (
        <ListadoGastos
          gastos={gastos}
+         setModal={setModal}
+         setGasto={setGasto}
        />
 
      )}
@@ -96,6 +128,9 @@ const [modal, setModal]= useState(false)
               <FormularioGasto
               setModal={setModal}
               handleGasto={handleGasto}
+              gasto={gasto}
+              setGasto={setGasto}
+              eliminarGasto={eliminarGasto}
               />
               </Modal>     
      
