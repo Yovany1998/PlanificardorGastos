@@ -16,7 +16,9 @@ import ControlPresupuesto from './src/components/ControlPresupuesto'
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
 import FormularioGasto from './src/components/FormularioGasto';
 import { generarId } from './src/helpers';
+import FiltroGasto from './src/components/FiltroGasto';
 import ListadoGastos from './src/components/ListadoGastos';
+
 
 const App = () => {
   const[isValidPresupuesto,setIsValidPresupuesto]= useState(false)
@@ -24,6 +26,8 @@ const App = () => {
   const [gastos,setGastos] = useState([])
   const [modal, setModal]= useState(false)
   const [gasto, setGasto] = useState({})
+  const [filtro ,setFiltro] = useState('')
+  const [gastosFiltrados, setGastosFiltrados] = useState('')
 
 
   const handleNuevoPresupuesto = (presupuesto) =>{
@@ -107,12 +111,24 @@ const  eliminarGasto = id =>{
       </View>
       
       {isValidPresupuesto && (
-       <ListadoGastos
-         gastos={gastos}
-         setModal={setModal}
-         setGasto={setGasto}
-       />
+        // Esto es un fragmen para colocar mas de 1 componente
+        <>
+            <FiltroGasto 
+            setFiltro = {setFiltro}
+            filtro = {filtro}
+            gastos={gastos}
+            setGastosFiltrados={setGastosFiltrados}
+            />
+          
+          <ListadoGastos
+            gastos={gastos}
+            setModal={setModal}
+            setGasto={setGasto}
+            filtro ={filtro}
+            gastosFiltrados ={gastosFiltrados}
+          />
 
+        </>
      )}
 
 </ScrollView>

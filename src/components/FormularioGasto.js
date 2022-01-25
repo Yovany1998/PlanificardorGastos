@@ -46,7 +46,8 @@ const FormularioGasto = ({setModal,
                     Cancelar
                 </Text>
             </Pressable>
-
+            {/* Verificar si esta vacio  un texto usando !! */}
+            {!!id && (
             <Pressable 
             onLongPress={() => eliminarGasto(id)}
             style={[styles.btn,styles.btnEliminar]}>
@@ -55,6 +56,9 @@ const FormularioGasto = ({setModal,
                     Eliminar
                 </Text>
             </Pressable>
+
+            )}
+
 
         </View>
 
